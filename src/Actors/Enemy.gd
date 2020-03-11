@@ -11,6 +11,7 @@ func _ready() -> void:
 	_velocity.x = -speed.x
 
 
+# warning-ignore:unused_argument
 func _physics_process(delta: float) -> void:
 	_velocity.x *= -1 if is_on_wall() else 1
 	_velocity.y = move_and_slide(_velocity, FLOOR_NORMAL).y

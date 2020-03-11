@@ -4,14 +4,17 @@ extends Actor
 export var stomp_impulse: = 600.0
 
 
+# warning-ignore:unused_argument
 func _on_StompDetector_area_entered(area: Area2D) -> void:
 	_velocity = calculate_stomp_velocity(_velocity, stomp_impulse)
 
 
+# warning-ignore:unused_argument
 func _on_EnemyDetector_body_entered(body: PhysicsBody2D) -> void:
 	die()
 
 
+# warning-ignore:unused_argument
 func _physics_process(delta: float) -> void:
 	var is_jump_interrupted: = Input.is_action_just_released("jump") and _velocity.y < 0.0
 	var direction: = get_direction()
@@ -24,7 +27,7 @@ func _physics_process(delta: float) -> void:
 
 func get_direction() -> Vector2:
 	return Vector2(
-		Input.get_action_strength("Move_right") - Input.get_action_strength("move_left"),
+		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		-Input.get_action_strength("jump") if is_on_floor() and Input.is_action_just_pressed("jump") else 0.0
 	)
 
@@ -44,11 +47,12 @@ func calculate_move_velocity(
 	return velocity
 
 
+# warning-ignore:shadowed_variable
 func calculate_stomp_velocity(linear_velocity: Vector2, stomp_impulse: float) -> Vector2:
 	var stomp_jump: = -speed.y if Input.is_action_pressed("jump") else -stomp_impulse
 	return Vector2(linear_velocity.x, stomp_jump)
 
 
 func die() -> void:
-	PlayerData.deaths += 10
+	PlayerData.deaths += 1
 	queue_free()
